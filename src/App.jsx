@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { styled } from 'styled-components'
+import { css, styled } from 'styled-components'
 
 const Wrapper = styled.div`
   height: 100%;
@@ -60,8 +60,9 @@ const TodoHeaderTitle = styled.div`
 
 const TodoItems = styled.div`
   display: flex;
-  flex-flow: row wrap;
-  place-content: flex-start space-around;
+  flex-flow: column wrap;
+  place-content: center;
+  row-gap: 10px;
   width: 100%;
   align-items: center;
 `
@@ -69,10 +70,12 @@ const TodoItems = styled.div`
 const TodoItem = styled.div`
   display: flex;
   flex-flow: row nowrap;
-  place-content: center space-around;
-  column-gap: 10px;
-  width: 100%;
+  place-content: center space-between;
   align-items: center;
+  width: 70%;
+  background: var(--primary-color);
+  padding: 10px;
+  border-radius: 7px;
 `
 
 const Box = styled.div`
@@ -80,28 +83,37 @@ const Box = styled.div`
   justify-content: center;
   align-items: center;
   column-gap: 10px;
+  transition: all 1s;
+  ${(props) => {
+    if (props.isChecked) {
+      return css`
+        opacity: 0.5;
+        color: gray;
+        text-decoration: line-through;
+      `
+    }
+  }}
 `
 
-// Bateu uma preguiça usar o checkbox, mas vou deixar aqui
-// const Checkbox = styled.input.attrs({
-//   type: 'checkbox',
-// })`
-//   appearance: none;
-//   border: solid 1px gray;
-//   border-radius: 3px;
-//   background: white;
-//   height: 30px;
-//   width: 30px;
-//
-//   &:checked {
-//     background-image: url('checkmark.png');
-//     background-position: center;
-//     background-size: 24px;
-//     background-repeat: no-repeat;
-//   }
-// `
-//
-const TodoTask = styled.p`
+const Checkbox = styled.input.attrs({
+  type: 'checkbox',
+})`
+  appearance: none;
+  border: solid 1px gray;
+  border-radius: 3px;
+  background: var(--background-color);
+  height: 30px;
+  width: 30px;
+
+  &:checked {
+    background-image: url('checkmark.png');
+    background-position: center;
+    background-size: 24px;
+    background-repeat: no-repeat;
+  }
+`
+
+const TodoName = styled.p`
   color: var(--black);
   font-size: 1.5rem;
 `
@@ -149,7 +161,9 @@ function App() {
     if (!userTask) return
     const copiedlist = [...todolist]
     const id = Math.random() + Date.now()
-    if (userTask.length > 0) copiedlist.push({ name: userTask, id })
+    if (userTask.length > 0) {
+      copiedlist.push({ name: userTask, id, isChecked: false })
+    }
 
     setTodoList(copiedlist)
   }
@@ -157,6 +171,22 @@ function App() {
   function DeleteTask(id) {
     let copiedlist = [...todolist]
     copiedlist = copiedlist.filter((todo) => todo.id !== id)
+
+    setTodoList(copiedlist)
+  }
+
+  function checkTask(id) {
+    let copiedlist = [...todolist]
+    copiedlist = copiedlist.map((todo) => {
+      if (todo.id === id) {
+        return {
+          ...todo,
+          isChecked: !todo.isChecked,
+        }
+      }
+
+      return { ...todo }
+    })
 
     setTodoList(copiedlist)
   }
@@ -184,8 +214,12 @@ function App() {
         <TodoItems>
           {todolist.map((todo) => (
             <TodoItem key={todo.id}>
-              <Box>
-                <TodoTask>{todo.name}</TodoTask>
+              <Box isChecked={todo.isChecked}>
+                <Checkbox
+                  onClick={() => checkTask(todo.id)}
+                  value={todo.isChecked}
+                />
+                <TodoName>{todo.name}</TodoName>
               </Box>
               <TrashCan
                 src="trashcan.png"
