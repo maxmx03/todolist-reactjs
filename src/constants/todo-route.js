@@ -8,9 +8,9 @@ import { redirect } from 'react-router-dom'
 
 class TodoRoute {
   static Element = Todo
-  static path = '/todo'
-  static getTodoPath = '/:projectId/todo'
-  static deleteTodoPath = '/:projectId/todo/delete'
+  static path = '/todolist-reactjs/todo'
+  static getTodoPath = '/todolist-reactjs/:projectId/todo'
+  static deleteTodoPath = '/todolist-reactjs/:projectId/todo/delete'
 
   static loader({ params }) {
     const state = store.getState()
@@ -42,7 +42,7 @@ class TodoRoute {
 
     store.dispatch(todoRemove(todoId))
 
-    return redirect(`/${projectId}/todo`)
+    return redirect(`/todolist-reactjs/${projectId}/todo`)
   }
 }
 

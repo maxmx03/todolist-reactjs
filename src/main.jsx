@@ -24,7 +24,7 @@ const router = createBrowserRouter([
         loader: DashboardRoute.loader,
       },
       {
-        path: '/:projectId',
+        path: '/todolist-reactjs/:projectId',
         index: true,
         element: <DashboardRoute.Element />,
         loader: DashboardRoute.loader,

@@ -5,7 +5,7 @@ import Root from '../routes/root'
 
 class RootRoute {
   static Element = Root
-  static path = '/'
+  static path = '/todolist-reactjs/'
 
   static loader() {
     const projects = projectsSelectors.selectAll(store.getState())

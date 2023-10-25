@@ -4,9 +4,12 @@ import { useParams, NavLink as RouterNavLink } from 'react-router-dom'
 
 function NavLink() {
   const { projectId } = useParams()
+  const url = projectId
+    ? `/todolist-reactjs/${projectId ?? ''}/todo`
+    : '/todolist-reactjs/todo'
 
   return (
-    <Link to={`${projectId ?? ''}/todo`} as={RouterNavLink}>
+    <Link to={url} as={RouterNavLink}>
       {({ isActive }) => (
         <Circle
           size="40px"

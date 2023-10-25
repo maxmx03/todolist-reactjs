@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 function Brand() {
   return (
-    <Link to="/">
+    <Link to="/todolist-reactjs/">
       <Icon as={VscRocket} fontSize={40} color="white" />
     </Link>
   )

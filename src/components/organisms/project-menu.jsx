@@ -59,7 +59,7 @@ function ProjectMenu() {
                   {projects.map((project) => (
                     <ListItem key={project.id}>
                       <ListIcon as={VscFile} color="white" />
-                      <NavLink to={`/${project.id}/todo`}>
+                      <NavLink to={`/todolist-reactjs/${project.id}/todo`}>
                         {project.name}
                       </NavLink>
                     </ListItem>
