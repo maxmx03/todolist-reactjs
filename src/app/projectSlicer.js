@@ -9,10 +9,11 @@ const projectsSlice = createSlice({
   initialState: projectsAdapter.getInitialState(),
   reducers: {
     projectAdd: projectsAdapter.addOne,
+    projectRemove: projectsAdapter.removeOne,
   },
 })
 
-export const { projectAdd } = projectsSlice.actions
+export const { projectAdd, projectRemove } = projectsSlice.actions
 
 export const projectsSelectors = projectsAdapter.getSelectors(
   (state) => state.projects,

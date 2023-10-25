@@ -1,6 +1,7 @@
 import { Flex } from '@chakra-ui/react'
 import Brand from '../atoms/brand'
 import NavLink from '../molecules/nav-link'
+import { VscDashboard, VscOutput } from 'react-icons/vsc'
 
 function SideMenu() {
   return (
@@ -13,7 +14,8 @@ function SideMenu() {
       gap={10}
     >
       <Brand />
-      <NavLink />
+      <NavLink url="/todo" icon={VscOutput} />
+      <NavLink url="/" icon={VscDashboard} />
     </Flex>
   )
 }

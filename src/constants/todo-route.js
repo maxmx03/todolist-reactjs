@@ -1,7 +1,12 @@
 import { nanoid } from '@reduxjs/toolkit'
 import { projectsSelectors } from '../app/projectSlicer'
 import { store } from '../app/store'
-import { todoAdd, todoRemove, todoSelectors } from '../app/todoSlicer'
+import {
+  todoAdd,
+  todoUpdate,
+  todoRemove,
+  todoSelectors,
+} from '../app/todoSlicer'
 import Todo from '../routes/todo'
 import { toTitleCase } from '../utils/toTitleCase'
 import { redirect } from 'react-router-dom'
@@ -9,8 +14,17 @@ import { redirect } from 'react-router-dom'
 class TodoRoute {
   static Element = Todo
   static path = '/todolist-reactjs/todo'
-  static getTodoPath = '/todolist-reactjs/:projectId/todo'
+  static todoPath = '/todolist-reactjs/:projectId/todo'
+  static checkTodoPath = '/todolist-reactjs/:projectId/todo/check'
   static deleteTodoPath = '/todolist-reactjs/:projectId/todo/delete'
+
+  static getTodoPath(projectId) {
+    return `/todolist-reactjs/${projectId}/todo`
+  }
+
+  static getDeleteTodoPath(projectId) {
+    return `/todolist-reactjs/${projectId}/todo/delete`
+  }
 
   static loader({ params }) {
     const state = store.getState()
@@ -29,10 +43,29 @@ class TodoRoute {
         name: toTitleCase(todo),
         projectId: params.projectId,
         id: nanoid(),
+        checked: false,
       }),
     )
 
     return null
+  }
+
+  static async checkTodoAction({ request, params }) {
+    const formData = await request.formData()
+    const checked = formData.get('todoCheckbox')
+    const todoId = formData.get('todoId')
+    const projectId = params.projectId
+
+    store.dispatch(
+      todoUpdate({
+        id: todoId,
+        changes: {
+          checked: checked == 'true',
+        },
+      }),
+    )
+
+    return redirect(`/todolist-reactjs/${projectId}/todo`)
   }
 
   static async todoDeleteAction({ request, params }) {

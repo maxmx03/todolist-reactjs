@@ -9,13 +9,12 @@ const todoSlice = createSlice({
   initialState: todoAdapter.getInitialState(),
   reducers: {
     todoAdd: todoAdapter.addOne,
-    todoRemove(state, action) {
-      todoAdapter.removeOne(state, action.payload)
-    },
+    todoUpdate: todoAdapter.updateOne,
+    todoRemove: todoAdapter.removeOne,
   },
 })
 
-export const { todoAdd, todoRemove } = todoSlice.actions
+export const { todoAdd, todoUpdate, todoRemove } = todoSlice.actions
 
 export const todoSelectors = todoAdapter.getSelectors((state) => state.todos)
 

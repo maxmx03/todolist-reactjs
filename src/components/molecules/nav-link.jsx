@@ -1,22 +1,26 @@
 import { Circle, Icon, Link } from '@chakra-ui/react'
-import { VscOutput } from 'react-icons/vsc'
 import { useParams, NavLink as RouterNavLink } from 'react-router-dom'
+import RootRoute from '../../constants/root-route'
 
-function NavLink() {
+function NavLink({ url, icon }) {
   const { projectId } = useParams()
-  const url = projectId
-    ? `/todolist-reactjs/${projectId ?? ''}/todo`
-    : '/todolist-reactjs/todo'
 
   return (
-    <Link to={url} as={RouterNavLink}>
+    <Link
+      to={
+        projectId
+          ? `${RootRoute.path}/${projectId}${url}`
+          : `${RootRoute.path}${url}`
+      }
+      as={RouterNavLink}
+    >
       {({ isActive }) => (
         <Circle
           size="40px"
           bg={isActive ? 'bglight' : ''}
           color={isActive ? 'white' : 'grey'}
         >
-          <Icon as={VscOutput} fontSize="2xl" />
+          <Icon as={icon} fontSize="2xl" />
         </Circle>
       )}
     </Link>

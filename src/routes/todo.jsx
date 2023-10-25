@@ -9,10 +9,11 @@ import {
   UnorderedList,
 } from '@chakra-ui/react'
 import { VscTrash } from 'react-icons/vsc'
-import { Form, useLoaderData } from 'react-router-dom'
+import { Form, useLoaderData, useSubmit } from 'react-router-dom'
 
 function Todo() {
   const { project, todos } = useLoaderData()
+  const submit = useSubmit()
 
   const renderList = () => {
     if (!todos) return <></>
@@ -21,15 +22,28 @@ function Todo() {
       if (project && project.id && todo.projectId == project.id) {
         return (
           <ListItem key={todo.id} display="flex" justifyContent="space-around">
-            <Checkbox
-              colorScheme="blue"
-              color="white"
-              size="lg"
-              flexBasis={450}
-            >
-              <Text fontSize={25}>{todo.name}</Text>
-            </Checkbox>
-            <Form method="post" action="delete">
+            <Form>
+              <Checkbox
+                colorScheme="blue"
+                color="white"
+                size="lg"
+                flexBasis={450}
+                value={todo.checked}
+                isChecked={todo.checked}
+                onChange={() => {
+                  submit(
+                    {
+                      todoCheckbox: !todo.checked,
+                      todoId: todo.id,
+                    },
+                    { method: 'post', action: 'check' },
+                  )
+                }}
+              >
+                <Text fontSize={25}>{todo.name}</Text>
+              </Checkbox>
+            </Form>
+            <Form method="delete" action="delete">
               <Button
                 color="red.500"
                 variant="unstyled"

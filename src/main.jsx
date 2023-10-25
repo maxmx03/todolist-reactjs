@@ -19,12 +19,16 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
+        path: RootRoute.projectDeletePath,
+        action: RootRoute.projectDeleteAction,
+      },
+      {
         index: true,
         element: <DashboardRoute.Element />,
         loader: DashboardRoute.loader,
       },
       {
-        path: '/todolist-reactjs/:projectId',
+        path: DashboardRoute.projectPath,
         index: true,
         element: <DashboardRoute.Element />,
         loader: DashboardRoute.loader,
@@ -35,10 +39,14 @@ const router = createBrowserRouter([
         loader: TodoRoute.loader,
       },
       {
-        path: TodoRoute.getTodoPath,
+        path: TodoRoute.todoPath,
         element: <TodoRoute.Element />,
         loader: TodoRoute.loader,
         action: TodoRoute.todoAddAction,
+      },
+      {
+        path: TodoRoute.checkTodoPath,
+        action: TodoRoute.checkTodoAction,
       },
       {
         path: TodoRoute.deleteTodoPath,

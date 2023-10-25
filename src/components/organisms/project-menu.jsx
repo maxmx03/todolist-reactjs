@@ -1,10 +1,5 @@
 import {
-  Accordion,
-  AccordionButton,
-  AccordionItem,
-  AccordionPanel,
   Box,
-  Button,
   Flex,
   Heading,
   Input,
@@ -13,9 +8,10 @@ import {
   ListItem,
   Stack,
 } from '@chakra-ui/react'
-import { VscAdd, VscFile, VscFolder, VscFolderOpened } from 'react-icons/vsc'
-import React from 'react'
+import { VscAdd, VscFile, VscTrash } from 'react-icons/vsc'
 import { Form, useLoaderData, NavLink } from 'react-router-dom'
+import TodoRoute from '../../constants/todo-route'
+import IconButton from '../molecules/icon-button'
 
 function ProjectMenu() {
   const { projects } = useLoaderData()
@@ -34,42 +30,50 @@ function ProjectMenu() {
       <Form method="post">
         <Stack spacing={2} direction="row">
           <Input
+            id="project-input"
             variant="flushed"
             placeholder="Insert project name"
             color="white"
             name="project"
           />
-          <Button type="submit" variant="unstyled">
-            <VscAdd color="white" size="32" />
-          </Button>
+          <IconButton
+            type="submit"
+            variant="unstyled"
+            color="white"
+            icon={VscAdd}
+            fontSize="3xl"
+          />
         </Stack>
       </Form>
-      <Accordion allowToggle>
-        <AccordionItem color="white">
-          {({ isExpanded }) => (
-            <React.Fragment>
-              <AccordionButton>
-                <Box as="span" flex="1" textAlign="left">
-                  My Projects
-                </Box>
-                {isExpanded ? <VscFolderOpened /> : <VscFolder />}
-              </AccordionButton>
-              <AccordionPanel pb={4}>
-                <List spacing={3}>
-                  {projects.map((project) => (
-                    <ListItem key={project.id}>
-                      <ListIcon as={VscFile} color="white" />
-                      <NavLink to={`/todolist-reactjs/${project.id}/todo`}>
-                        {project.name}
-                      </NavLink>
-                    </ListItem>
-                  ))}
-                </List>
-              </AccordionPanel>
-            </React.Fragment>
-          )}
-        </AccordionItem>
-      </Accordion>
+      <List spacing={3} color="white">
+        {projects.map((project) => (
+          <ListItem
+            key={project.id}
+            display="flex"
+            flexFlow="row wrap"
+            placeContent="space-around"
+            alignItems="center"
+          >
+            <Box flex={1}>
+              <ListIcon as={VscFile} color="white" />
+              <NavLink to={TodoRoute.getTodoPath(project.id)}>
+                {project.name}
+              </NavLink>
+            </Box>
+            <Form method="delete" action="project/delete">
+              <IconButton
+                type="submit"
+                value={project.id}
+                name="delete-project"
+                variant="unstyled"
+                color="white"
+                icon={VscTrash}
+                fontSize="2xl"
+              />
+            </Form>
+          </ListItem>
+        ))}
+      </List>
     </Flex>
   )
 }
