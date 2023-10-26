@@ -10,6 +10,8 @@ import {
 import Todo from '../routes/todo'
 import { toTitleCase } from '../utils/toTitleCase'
 import { redirect } from 'react-router-dom'
+import moment from 'moment'
+import { todoChartSelectors, todoChartUpdate } from '../app/todoChartSlice'
 
 class TodoRoute {
   static Element = Todo
@@ -38,14 +40,32 @@ class TodoRoute {
     const formData = await request.formData()
     const todo = formData.get('todo')
 
+    if (todo.length == 0) return null
+
+    const createdAt = moment().format('MMMM')
+
     store.dispatch(
       todoAdd({
         name: toTitleCase(todo),
         projectId: params.projectId,
         id: nanoid(),
         checked: false,
+        createdAt,
       }),
     )
+
+    const todoChart = todoChartSelectors.selectById(store.getState(), createdAt)
+
+    store.dispatch(
+      todoChartUpdate({
+        id: todoChart.month,
+        changes: {
+          tasks: todoChart.tasks + 1,
+        },
+      }),
+    )
+
+    document.getElementById('todo-input').value = ''
 
     return null
   }

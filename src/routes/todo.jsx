@@ -4,6 +4,7 @@ import {
   Flex,
   Input,
   ListItem,
+  Spacer,
   Stack,
   Text,
   UnorderedList,
@@ -21,13 +22,12 @@ function Todo() {
     return todos.map((todo) => {
       if (project && project.id && todo.projectId == project.id) {
         return (
-          <ListItem key={todo.id} display="flex" justifyContent="space-around">
+          <ListItem key={todo.id} display="flex">
             <Form>
               <Checkbox
                 colorScheme="blue"
                 color="white"
                 size="lg"
-                flexBasis={450}
                 value={todo.checked}
                 isChecked={todo.checked}
                 onChange={() => {
@@ -43,9 +43,10 @@ function Todo() {
                 <Text fontSize={25}>{todo.name}</Text>
               </Checkbox>
             </Form>
+            <Spacer />
             <Form method="delete" action="delete">
               <Button
-                color="red.500"
+                color="white"
                 variant="unstyled"
                 type="submit"
                 name="todoId"
@@ -65,12 +66,20 @@ function Todo() {
       <Text color="white" fontSize="3xl" fontWeight="bold">
         {project?.name ?? 'Select a project'}
       </Text>
-      <UnorderedList flex={1} spacing={30} overflowY="auto" maxH="xl">
+      <UnorderedList
+        spacing={30}
+        overflowY="auto"
+        maxH="xl"
+        width="4xl"
+        alignSelf="center"
+      >
         {renderList()}
       </UnorderedList>
+      <Spacer />
       <Form method="post">
         <Stack direction="row">
           <Input
+            id="todo-input"
             placeholder="Insert a new task"
             name="todo"
             color="white"

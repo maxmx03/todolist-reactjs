@@ -5,7 +5,7 @@ function WebPage({ children }) {
   return (
     <Flex height="full" width="full" flexFlow="row wrap">
       {children}
-      <Box background="bg" flex={1}>
+      <Box background="bg" flex={1} flexGrow="1">
         <Outlet />
       </Box>
     </Flex>

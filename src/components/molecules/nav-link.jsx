@@ -1,17 +1,10 @@
 import { Circle, Icon, Link } from '@chakra-ui/react'
-import { useParams, NavLink as RouterNavLink } from 'react-router-dom'
-import RootRoute from '../../constants/root-route'
+import { NavLink as RouterNavLink } from 'react-router-dom'
 
 function NavLink({ url, icon }) {
-  const { projectId } = useParams()
-
   return (
     <Link
-      to={
-        projectId
-          ? `${RootRoute.path}/${projectId}${url}`
-          : `${RootRoute.path}${url}`
-      }
+      to={url}
       as={RouterNavLink}
     >
       {({ isActive }) => (

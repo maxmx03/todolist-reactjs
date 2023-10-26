@@ -3,58 +3,9 @@ import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { store } from './app/store.js'
 import { ChakraProvider } from '@chakra-ui/react'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { RouterProvider } from 'react-router-dom'
 import theme from './theme.js'
-import ErrorPage from './routes/error-page.jsx'
-import DashboardRoute from './constants/dashboard-route.js'
-import TodoRoute from './constants/todo-route.js'
-import RootRoute from './constants/root-route.js'
-
-const router = createBrowserRouter([
-  {
-    path: RootRoute.path,
-    element: <RootRoute.Element />,
-    loader: RootRoute.loader,
-    action: RootRoute.projectAddAction,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path: RootRoute.projectDeletePath,
-        action: RootRoute.projectDeleteAction,
-      },
-      {
-        index: true,
-        element: <DashboardRoute.Element />,
-        loader: DashboardRoute.loader,
-      },
-      {
-        path: DashboardRoute.projectPath,
-        index: true,
-        element: <DashboardRoute.Element />,
-        loader: DashboardRoute.loader,
-      },
-      {
-        path: TodoRoute.path,
-        element: <TodoRoute.Element />,
-        loader: TodoRoute.loader,
-      },
-      {
-        path: TodoRoute.todoPath,
-        element: <TodoRoute.Element />,
-        loader: TodoRoute.loader,
-        action: TodoRoute.todoAddAction,
-      },
-      {
-        path: TodoRoute.checkTodoPath,
-        action: TodoRoute.checkTodoAction,
-      },
-      {
-        path: TodoRoute.deleteTodoPath,
-        action: TodoRoute.todoDeleteAction,
-      },
-    ],
-  },
-])
+import { router } from './routes/router.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

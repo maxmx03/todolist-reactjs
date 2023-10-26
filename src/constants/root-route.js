@@ -8,6 +8,11 @@ import { store } from '../app/store'
 import Root from '../routes/root'
 import { toTitleCase } from '../utils/toTitleCase'
 import { redirect } from 'react-router-dom'
+import moment from 'moment/moment'
+import {
+  projectChartSelectors,
+  projectChartUpdate,
+} from '../app/projectChartSlicer'
 
 class RootRoute {
   static Element = Root
@@ -26,10 +31,27 @@ class RootRoute {
 
     if (project.length === 0) return null
 
+    const createdAt = moment().format('MMMM')
+
     store.dispatch(
       projectAdd({
         id: nanoid(),
         name: toTitleCase(project),
+        createdAt,
+      }),
+    )
+
+    const projectChart = projectChartSelectors.selectById(
+      store.getState(),
+      createdAt,
+    )
+
+    store.dispatch(
+      projectChartUpdate({
+        id: projectChart.month,
+        changes: {
+          projects: projectChart.projects + 1,
+        },
       }),
     )
 

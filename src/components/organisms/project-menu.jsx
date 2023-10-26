@@ -20,6 +20,7 @@ function ProjectMenu() {
     <Flex
       background="bgdark"
       flexBasis={300}
+      flexGrow={[0, 1, 1, 1, 1, 0]}
       padding={5}
       flexDirection="column"
       gap={30}
