@@ -20,44 +20,42 @@ function Todo() {
     if (!todos) return <></>
 
     return todos.map((todo) => {
-      if (project && project.id && todo.projectId == project.id) {
-        return (
-          <ListItem key={todo.id} display="flex">
-            <Form>
-              <Checkbox
-                colorScheme="blue"
-                color="white"
-                size="lg"
-                value={todo.checked}
-                isChecked={todo.checked}
-                onChange={() => {
-                  submit(
-                    {
-                      todoCheckbox: !todo.checked,
-                      todoId: todo.id,
-                    },
-                    { method: 'post', action: 'check' },
-                  )
-                }}
-              >
-                <Text fontSize={25}>{todo.name}</Text>
-              </Checkbox>
-            </Form>
-            <Spacer />
-            <Form method="delete" action="delete">
-              <Button
-                color="white"
-                variant="unstyled"
-                type="submit"
-                name="todoId"
-                value={todo.id}
-              >
-                <VscTrash size={30} />
-              </Button>
-            </Form>
-          </ListItem>
-        )
-      }
+      return (
+        <ListItem key={todo.id} display="flex">
+          <Form>
+            <Checkbox
+              colorScheme="blue"
+              color="white"
+              size="lg"
+              value={todo.checked}
+              isChecked={todo.checked}
+              onChange={() => {
+                submit(
+                  {
+                    todoCheckbox: !todo.checked,
+                    todoId: todo.id,
+                  },
+                  { method: 'post', action: 'check' },
+                )
+              }}
+            >
+              <Text fontSize={25}>{todo.name}</Text>
+            </Checkbox>
+          </Form>
+          <Spacer />
+          <Form method="delete" action="delete">
+            <Button
+              color="white"
+              variant="unstyled"
+              type="submit"
+              name="todoId"
+              value={todo.id}
+            >
+              <VscTrash size={30} />
+            </Button>
+          </Form>
+        </ListItem>
+      )
     })
   }
 

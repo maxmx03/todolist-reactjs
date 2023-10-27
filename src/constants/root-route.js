@@ -13,6 +13,7 @@ import {
   projectChartSelectors,
   projectChartUpdate,
 } from '../app/projectChartSlicer'
+import { todoRemoveMany, todoSelectors } from '../app/todoSlicer'
 
 class RootRoute {
   static Element = Root
@@ -63,8 +64,14 @@ class RootRoute {
   static async projectDeleteAction({ request }) {
     const formData = await request.formData()
     const projectId = formData.get('delete-project')
+    const selectedTodos = todoSelectors.selectAll(store.getState())
+    const todos = [...selectedTodos]
+    const projectTodosIds = todos.map((todo) => {
+      if (todo.projectId == projectId) return todo.id
+    })
 
     store.dispatch(projectRemove(projectId))
+    store.dispatch(todoRemoveMany(projectTodosIds))
 
     return redirect(RootRoute.path)
   }

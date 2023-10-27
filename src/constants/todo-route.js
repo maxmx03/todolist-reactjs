@@ -31,7 +31,9 @@ class TodoRoute {
   static loader({ params }) {
     const state = store.getState()
     const project = projectsSelectors.selectById(state, params.projectId)
-    const todos = todoSelectors.selectAll(state)
+    const selectTodos = todoSelectors.selectAll(state)
+    let todos = [...selectTodos]
+    todos = todos.filter((todo) => todo.projectId == params.projectId)
 
     return { project, todos }
   }

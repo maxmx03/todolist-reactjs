@@ -11,10 +11,12 @@ const todoSlice = createSlice({
     todoAdd: todoAdapter.addOne,
     todoUpdate: todoAdapter.updateOne,
     todoRemove: todoAdapter.removeOne,
+    todoRemoveMany: todoAdapter.removeMany,
   },
 })
 
-export const { todoAdd, todoUpdate, todoRemove } = todoSlice.actions
+export const { todoAdd, todoUpdate, todoRemove, todoRemoveMany } =
+  todoSlice.actions
 
 export const todoSelectors = todoAdapter.getSelectors((state) => state.todos)
 
