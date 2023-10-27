@@ -18,11 +18,15 @@ export const store = configureStore({
   preloadedState: persistedState,
 })
 
-store.subscribe(_.throttle(() => {
-  saveState({
-    todos: store.getState().todos,
-    projects: store.getState().projects,
-    todoChart: store.getState().todoChart,
-    projectChart: store.getState().projectChart,
-  })
-}, 1000))
+store.subscribe(
+  _.throttle(() => {
+    const state = store.getState()
+
+    saveState({
+      todos: state.todos,
+      projects: state.projects,
+      todoChart: state.todoChart,
+      projectChart: state.projectChart,
+    })
+  }, 1000),
+)
