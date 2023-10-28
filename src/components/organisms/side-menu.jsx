@@ -12,8 +12,7 @@ function SideMenu() {
   return (
     <Flex
       background="bgdarker"
-      flexBasis={200}
-      flexGrow={[0, 1, 1, 1, 1, 0]}
+      flexBasis={300}
       direction="column"
       alignItems="center"
       padding={5}
