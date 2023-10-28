@@ -17,7 +17,7 @@ function Dashboard() {
     <Flex
       h="full"
       display="flex"
-      flexFlow="column wrap"
+      flexFlow="column"
       justifyContent="space-around"
       padding={10}
       gap={50}
