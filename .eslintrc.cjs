@@ -13,6 +13,5 @@ module.exports = {
     'react-refresh/only-export-components': 'warn',
     semi: ['warn', 'never'],
     quotes: ['warn', 'single'],
-    'react/prop-types': 0,
   },
 }
